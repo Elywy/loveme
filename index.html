@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heartfelt Confession</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #ffeef8 100%);
+            min-height: 100vh;
+        }
+        
+        .heartbeat {
+            animation: heartbeat 1.5s ease-in-out infinite both;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        .heart-float {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.7;
+            animation: floating 8s ease-in-out infinite, pulse 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 5px rgba(255, 20, 147, 0.5));
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .confession-card {
+            box-shadow: 0 20px 50px rgba(255, 138, 196, 0.3);
+        }
+        
+        .heart-pulse {
+            animation: heartPulse 1.5s ease-out;
+        }
+        
+        @keyframes heartPulse {
+            0% { opacity: 0; }
+            20% { opacity: 0.7; }
+            100% { opacity: 0; }
+        }
+        
+        .heart-pulse div {
+            animation: heartScale 1.5s ease-out;
+        }
+        
+        @keyframes heartScale {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.5); }
+            100% { transform: scale(0); }
+        }
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Theme styles */
+        .happy-theme {
+            background: linear-gradient(135deg, #f6fdfe 0%, #e3fdf5 100%) !important;
+        }
+
+        .happy-theme .confession-card {
+            box-shadow: 0 20px 50px rgba(100, 255, 200, 0.4);
+        }
+
+        .happy-theme .bg-gradient-to-r {
+            background: linear-gradient(to right, #4ade80, #22d3ee) !important;
+        }
+
+        .sad-theme {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%) !important;
+            color: white !important;
+        }
+
+        .sad-theme .confession-card {
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            background: #1a1a2e !important;
+            color: white !important;
+        }
+
+        .sad-theme .bg-gradient-to-r {
+            background: linear-gradient(to right, #64748b, #475569) !important;
+        }
+
+        .sad-theme .text-gray-700,
+        .sad-theme .text-pink-800,
+        .sad-theme .text-gray-400 {
+            color: #e2e8f0 !important;
+        }
+
+        .sad-theme input,
+        .sad-theme button:not(#yesBtn):not(#noBtn) {
+            background-color: #1e293b !important;
+            color: white !important;
+            border-color: #334155 !important;
+        }
+        
+        .name-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 138, 196, 0.3);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4">
+    <div class="max-w-2xl w-full">
+        <div class="confession-card rounded-3xl overflow-hidden transition-all duration-500">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-pink-500 to-rose-500 p-8 text-center">
+                <h1 class="text-4xl md:text-5xl font-bold text-white font-['Playfair+Display'] mb-2">Heartfelt Confession</h1>
+                <p class="text-pink-100 text-lg">Express your feelings in the most beautiful way</p>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="p-8">
+                <div class="flex flex-col md:flex-row gap-8 items-center">
+                    <!-- Left Side - Input -->
+                    <div class="w-full md:w-1/2">
+                        <div class="mb-6">
+                            <label for="name" class="block text-gray-700 text-sm font-medium mb-2">Their Name</label>
+                            <input type="text" id="name" class="name-input w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-400 transition" placeholder="Enter their name">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-gray-700 text-sm font-medium mb-2">Your Relationship</label>
+                            <div class="grid grid-cols-2 gap-3">
+                                <button class="relation-btn bg-gray-100 hover:bg-pink-100 text-gray-800 py-2 px-4 rounded-lg transition" data-relation="friend">Friend</button>
+                                <button class="relation-btn bg-gray-100 hover:bg-pink-100 text-gray-800 py-2 px-4 rounded-lg transition" data-relation="crush">Crush</button>
+                                <button class="relation-btn bg-gray-100 hover:bg-pink-100 text-gray-800 py-2 px-4 rounded-lg transition" data-relation="partner">Partner</button>
+                                <button class="relation-btn bg-gray-100 hover:bg-pink-100 text-gray-800 py-2 px-4 rounded-lg transition" data-relation="secret">Secret Admirer</button>
+                            </div>
+                        </div>
+                        
+                        <button id="generateBtn" class="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold py-3 px-4 rounded-lg shadow-lg transition-all transform hover:scale-105">
+                            <i class="fas fa-heart mr-2"></i> Create My Confession
+                        </button>
+                    </div>
+                    
+                    <!-- Right Side - Preview -->
+                    <div class="w-full md:w-1/2">
+                        <div class="bg-pink-50 border border-pink-100 rounded-xl p-6 h-full flex flex-col relative overflow-hidden">
+                            <div class="heart-pulse absolute inset-0 flex items-center justify-center pointer-events-none opacity-0">
+                                <div class="text-6xl text-pink-200 transform scale-0">❤️</div>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-pink-800 mb-4">Your Beautiful Confession</h3>
+                                <div id="confessionPreview" class="text-gray-700 italic min-h-[200px] flex items-center justify-center">
+                                    <p class="text-center text-gray-400">Your personalized love message will appear here...</p>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 flex justify-between">
+                                <div class="response-buttons hidden space-x-2">
+                                    <button id="yesBtn" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition transform hover:scale-105">
+                                        <i class="fas fa-heart mr-1"></i> YES
+                                    </button>
+                                    <button id="noBtn" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition transform hover:scale-105">
+                                        <i class="fas fa-heart-crack mr-1"></i> NO
+                                    </button>
+                                </div>
+                                <button id="copyBtn" class="bg-white border border-pink-200 text-pink-600 hover:bg-pink-50 px-4 py-2 rounded-lg text-sm transition hidden">
+                                    <i class="fas fa-copy mr-1"></i> Copy Text
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Decorative Elements -->
+            <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+                <div class="absolute top-1/4 left-1/4 w-16 h-16 rounded-full bg-pink-200 opacity-20 floating" style="animation-delay: 0s;"></div>
+                <div class="absolute top-1/3 right-1/4 w-12 h-12 rounded-full bg-rose-200 opacity-20 floating" style="animation-delay: 1s;"></div>
+                <div class="absolute bottom-1/4 right-1/3 w-20 h-20 rounded-full bg-pink-300 opacity-15 floating" style="animation-delay: 2s;"></div>
+                
+                <!-- Floating Hearts -->
+                <div class="heart-float" style="top: 15%; left: 10%; animation-delay: 0.5s;">❤️</div>
+                <div class="heart-float" style="top: 25%; left: 80%; animation-delay: 1.5s;">❤️</div>
+                <div class="heart-float" style="top: 65%; left: 15%; animation-delay: 2.5s;">❤️</div>
+                <div class="heart-float" style="top: 75%; left: 70%; animation-delay: 3s;">❤️</div>
+            </div>
+        </div>
+        
+        <!-- Sample Messages (hidden) -->
+        <div id="sampleMessages" class="hidden">
+            <div data-relation="friend">
+                "[NAME], I've treasured our friendship like a favorite book I keep returning to, but lately I've discovered new chapters in my heart I never knew existed. Your laughter has become my favorite melody, and the way your eyes light up could power entire cities. I'm ready to risk our comfortable pages for a chance at an extraordinary love story. Would you go on a date with me?"
+            </div>
+            <div data-relation="crush">
+                "[NAME], from the moment I first saw you, my heart has been writing sonnets I'm too shy to recite. You move through the world with a quiet magic that turns ordinary moments into something extraordinary. I want to know what makes your soul dance, to learn the rhythm of your thoughts over candlelight. Will you give us a chance?"
+            </div>
+            <div data-relation="partner">
+                "[NAME], even after all this time, you still give me butterflies like it's our first spring together. But now I want to fall in love with you all over again - slowly, intentionally, discovering new constellations in the universe of your being. Let me take you on a date where the only agenda is remembering why we're so extraordinary together. What do you say?"
+            </div>
+            <div data-relation="secret">
+                "[NAME], I've been collecting moments with you like seashells - each one more beautiful than the last, but never quite enough. Your kindness shines brighter than you know, and your smile could power my darkest days. I'm tired of admiring from afar when my heart wants to build a home in yours. Would you let me take you out sometime?"
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fireworks effect
+        function createFireworks(x, y) {
+            const colors = ['#ff5e7d', '#ff9a8b', '#ffccd5', '#ff85a2', '#ff7096'];
+            const fireworks = document.createElement('div');
+            fireworks.className = 'absolute pointer-events-none';
+            fireworks.style.left = `${x}px`;
+            fireworks.style.top = `${y}px`;
+            
+            for (let i = 0; i < 12; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'absolute w-2 h-2 rounded-full';
+                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.transform = `translate(${Math.random() * 30 - 15}px, ${Math.random() * 30 - 15}px)`;
+                particle.style.opacity = '1';
+                particle.style.transition = 'all 0.8s ease-out';
+                fireworks.appendChild(particle);
+                
+                setTimeout(() => {
+                    particle.style.transform += ` scale(2)`;
+                    particle.style.opacity = '0';
+                }, 10);
+            }
+            
+            document.body.appendChild(fireworks);
+            setTimeout(() => fireworks.remove(), 1000);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const nameInput = document.getElementById('name');
+            const generateBtn = document.getElementById('generateBtn');
+            const copyBtn = document.getElementById('copyBtn');
+            const confessionPreview = document.getElementById('confessionPreview');
+            const relationBtns = document.querySelectorAll('.relation-btn');
+            const sampleMessages = document.getElementById('sampleMessages');
+            
+            let currentRelation = 'friend';
+            
+            // Set relation
+            relationBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    relationBtns.forEach(b => b.classList.remove('bg-pink-500', 'text-white'));
+                    this.classList.add('bg-pink-500', 'text-white');
+                    currentRelation = this.dataset.relation;
+                });
+            });
+            
+            // Generate confession
+            generateBtn.addEventListener('click', function() {
+                const name = nameInput.value.trim();
+                
+                if (!name) {
+                    confessionPreview.innerHTML = '<p class="text-center text-rose-500">Please enter a name first!</p>';
+                    return;
+                }
+                
+                // Show loading effect
+                confessionPreview.innerHTML = '<div class="flex justify-center"><div class="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-pink-500"></div></div>';
+                
+                // Simulate processing delay
+                setTimeout(() => {
+                    const template = sampleMessages.querySelector(`[data-relation="${currentRelation}"]`).textContent;
+                    const confession = template.replace(/\[NAME\]/g, name);
+                    
+                    confessionPreview.innerHTML = `<p class="text-pink-900 leading-relaxed">${confession}</p>`;
+                    // Trigger heart pulse
+                    const heartPulse = document.querySelector('.heart-pulse');
+                    heartPulse.style.animation = 'none';
+                    heartPulse.offsetHeight; // Trigger reflow
+                    heartPulse.style.animation = 'heartPulse 1.5s ease-out';
+                    copyBtn.classList.remove('hidden');
+                    
+                    // Trigger fireworks
+                    const btnRect = generateBtn.getBoundingClientRect();
+                    for (let i = 0; i < 5; i++) {
+                        setTimeout(() => {
+                            createFireworks(
+                                btnRect.left + btnRect.width/2,
+                                btnRect.top + btnRect.height/2
+                            );
+                        }, i * 200);
+                    }
+                    
+                    // Add heartbeat effect to the generate button
+                    generateBtn.classList.add('heartbeat');
+                    setTimeout(() => generateBtn.classList.remove('heartbeat'), 1500);
+                }, 800);
+            });
+            
+            // Copy text
+            copyBtn.addEventListener('click', function() {
+                const text = confessionPreview.textContent;
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalText = copyBtn.innerHTML;
+                    copyBtn.innerHTML = '<i class="fas fa-check mr-1"></i> Copied!';
+                    copyBtn.classList.add('bg-green-100', 'text-green-700', 'border-green-200');
+                    
+                    setTimeout(() => {
+                        copyBtn.innerHTML = originalText;
+                        copyBtn.classList.remove('bg-green-100', 'text-green-700', 'border-green-200');
+                    }, 2000);
+                });
+            });
+            
+            // Set first relation button as active by default
+            if (relationBtns.length > 0) {
+                relationBtns[0].classList.add('bg-pink-500', 'text-white');
+            }
+
+            // Response buttons
+            const yesBtn = document.getElementById('yesBtn');
+            const noBtn = document.getElementById('noBtn');
+            const responseButtons = document.querySelector('.response-buttons');
+
+            // Show response buttons when confession is generated
+            generateBtn.addEventListener('click', function() {
+                setTimeout(() => {
+                    responseButtons.classList.remove('hidden');
+                }, 800);
+            });
+
+            // YES button - happy response
+            yesBtn.addEventListener('click', function() {
+                document.body.classList.add('happy-theme');
+                document.body.classList.remove('sad-theme');
+                
+                // Create celebration effect
+                for (let i = 0; i < 20; i++) {
+                    setTimeout(() => {
+                        createFireworks(
+                            Math.random() * window.innerWidth,
+                            Math.random() * window.innerHeight
+                        );
+                    }, i * 200);
+                }
+                
+                // Show happy message
+                confessionPreview.innerHTML = `
+                    <div class="text-center">
+                        <div class="text-6xl text-green-500 mb-4 animate-bounce">❤️</div>
+                        <p class="text-green-700 font-bold text-xl">YAY! Let's make beautiful memories together!</p>
+                    </div>
+                `;
+                
+                responseButtons.classList.add('hidden');
+                copyBtn.classList.add('hidden');
+            });
+
+            // NO button - sad response
+            noBtn.addEventListener('click', function() {
+                document.body.classList.add('sad-theme');
+                document.body.classList.remove('happy-theme');
+                
+                // Show sad message
+                confessionPreview.innerHTML = `
+                    <div class="text-center">
+                        <div class="text-6xl text-gray-500 mb-4">💔</div>
+                        <p class="text-gray-700">My heart is broken, but I respect your decision...</p>
+                    </div>
+                `;
+                
+                responseButtons.classList.add('hidden');
+                copyBtn.classList.add('hidden');
+            });
+        });
+    </script>
+<p style="border-radius: 8px; text-align: center; font-size: 12px; color: #fff; margin-top: 16px;position: fixed; left: 8px; bottom: 8px; z-index: 10; background: rgba(0, 0, 0, 0.8); padding: 4px 8px;">Made with <img src="https://enzostvs-deepsite.hf.space/logo.svg" alt="DeepSite Logo" style="width: 16px; height: 16px; vertical-align: middle;display:inline-block;margin-right:3px;filter:brightness(0) invert(1);"><a href="https://enzostvs-deepsite.hf.space" style="color: #fff;text-decoration: underline;" target="_blank" >DeepSite</a> - 🧬 <a href="https://enzostvs-deepsite.hf.space?remix=Elywy/askmeout" style="color: #fff;text-decoration: underline;" target="_blank" >Remix</a></p></body>
+</html>
